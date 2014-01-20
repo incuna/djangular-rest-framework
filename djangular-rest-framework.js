@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('djangular-rest-framework', [])
+    angular.module('djangularRestFramework', [])
         .factory('drf', ['$rootScope', '$http', '$angularCacheFactory', 'extQ', function ($rootScope, $http, $angularCacheFactory, extQ) {
             var equals = angular.equals;
             var forEach = angular.forEach;
@@ -161,4 +161,4 @@
 
             return api;
         }]);
-});
+}());
