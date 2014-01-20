@@ -1,0 +1,31 @@
+{
+  "name": "djangular-rest-framework",
+  "version": "1.0.0",
+  "homepage": "https://github.com/incuna/djangular-rest-framework",
+  "authors": [
+    "Marc Tamlyn <marc.tamlyn@gmail.com>",
+    "Perry Roper <perryroper@gmail.com>"
+  ],
+  "description": "AngularJS interface for Django Rest Framework (DRF)",
+  "main": "djangular-rest-framework.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "keywords": [
+    "angularjs",
+    "django",
+    "rest",
+    "framework",
+    "drf",
+    "api"
+  ],
+  "dependencies": {
+    "angular": "~1.2"
+    "angular-ext-q": "1.0.0"
+  }
+}
