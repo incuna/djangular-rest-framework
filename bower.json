@@ -25,7 +25,7 @@
     "api"
   ],
   "dependencies": {
-    "angular": "~1.2"
+    "angular": "~1.2",
     "angular-ext-q": "1.0.0"
   }
 }
