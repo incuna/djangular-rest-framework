@@ -61,6 +61,9 @@
                 },
 
                 loadList: function (url, options, deferred) {
+                    options = options || {};
+                    deferred = deferred || extQ.defer(['add', 'update', 'remove']);
+
                     // Load list of item URLs from urlCache.
                     var cached = api.urlCache.get(url);
                     if (isDefined(options.limit) && isDefined(cached)) {
@@ -115,6 +118,9 @@
                 },
 
                 loadItem: function (url, options, deferred) {
+                    options = options || {};
+                    deferred = deferred || extQ.defer(['add', 'update', 'remove']);
+
                     // Load the item from the cache.
                     var cached = api.objectCache.get(url);
                     if (isDefined(cached)) {
@@ -138,6 +144,8 @@
                 },
 
                 loadOptions: function (url, deferred) {
+                    deferred = deferred || extQ.defer();
+
                     // Load the options from the cache.
                     var cached = api.optionsCache.get(url);
                     if (isDefined(cached)) {
