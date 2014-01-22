@@ -5,4 +5,4 @@ djangular-rest-framework
 
 `bower install djangular-rest-framework`
 
-Load the main js file and all dependcies in to your HTML.
+Load the main js file and all dependencies in to your HTML.
