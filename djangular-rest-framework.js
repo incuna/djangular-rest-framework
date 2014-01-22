@@ -24,12 +24,27 @@
                         url: url,
                         params: options.params
                     }).then(function (response) {
-                        deferred.update(response.data);
-                        items = items.concat(response.data);
-                        if (isDefined(options.limit)) {
-                            items = items.splice(0, options.limit);
+                        // If the response has pages it will be structured
+                        // differently.
+                        var data;
+                        if (angular.isDefined(response.data.results)) {
+                            data = response.data.results;
+                        } else {
+                            data = response.data;
                         }
-                        deferred.resolve(items);
+
+                        deferred.update(data);
+                        items = items.concat(data);
+
+                        if (angular.isDefined(response.data.next) && items.length < options.limit) {
+                            api.getPage(response.data.next, options, deferred, items);
+                        } else {
+                            if (isDefined(options.limit)) {
+                                items = items.splice(0, options.limit);
+                            }
+                            deferred.resolve(items);
+                        }
+
                     }, function (response, status) {
                         deferred.reject({response: response, status: status});
                     });
