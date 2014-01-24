@@ -33,6 +33,10 @@
                             data = response.data;
                         }
 
+                        if (angular.isDefined(response.data.count) && angular.isUndefined(options.limit)) {
+                            options.limit = response.data.count;
+                        }
+
                         deferred.update(data);
                         items = items.concat(data);
 
