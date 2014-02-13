@@ -13,6 +13,10 @@
                 storageMode: 'localStorage'
             };
 
+            var defaultOptions = {
+                cache: true
+            };
+
             var api = {
                 optionsCache: $angularCacheFactory('optionsCache', cacheOptions),
                 urlCache: $angularCacheFactory('urlCache', cacheOptions),
@@ -79,56 +83,65 @@
                     return deferred.promise;
                 },
 
+
                 loadList: function (url, options, deferred) {
-                    options = options || {};
+                    options = angular.extend(defaultOptions, options);
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
-                    // Load list of item URLs from urlCache.
-                    var cached = api.urlCache.get(url);
-                    if (isDefined(options.limit) && isDefined(cached)) {
-                        cached = cached.splice(0, options.limit);
-                    }
-                    forEach(cached, function (url) {
-                        var obj = api.objectCache.get(url);
-                        if (isDefined(obj)) {
-                            deferred.add(obj);
+                    if (options.cache) {
+                        // Load list of item URLs from urlCache.
+                        var cached = api.urlCache.get(url);
+                        if (isDefined(options.limit) && isDefined(cached)) {
+                            cached = cached.splice(0, options.limit);
                         }
-                    });
+                        forEach(cached, function (url) {
+                            var obj = api.objectCache.get(url);
+                            if (isDefined(obj)) {
+                                deferred.add(obj);
+                            }
+                        });
+                    }
 
                     var seen = {};
                     api.stream(url, options).update(function (list) {
                         // Stream the list
                         forEach(list, function (item) {
                             seen[item.url] = item;
-                            var cached = api.objectCache.get(item.url);
-                            if (isUndefined(cached)) {
-                                api.objectCache.put(item.url, item);
+                            if (options.cache) {
+                                var cached = api.objectCache.get(item.url);
+                                if (isUndefined(cached)) {
+                                    api.objectCache.put(item.url, item);
+                                    deferred.add(item);
+                                } else if (!equals(cached, item)) {
+                                    api.objectCache.put(item.url, item);
+                                    deferred.update(item);
+                                }
+                            } else {
                                 deferred.add(item);
-                            } else if (!equals(cached, item)) {
-                                api.objectCache.put(item.url, item);
-                                deferred.update(item);
                             }
                         });
                     }).then(function (list) {
-                        // Remove items from the cache if they were not returned
-                        // in the list.
-                        if (cached) {
-                            forEach(cached, function (url) {
-                                if (isUndefined(seen[url])) {
-                                    deferred.remove(url);
-                                    api.objectCache.remove(url);
+                        if (options.cache) {
+                            // Remove items from the cache if they were not returned
+                            // in the list.
+                            if (cached) {
+                                forEach(cached, function (url) {
+                                    if (isUndefined(seen[url])) {
+                                        deferred.remove(url);
+                                        api.objectCache.remove(url);
+                                    }
+                                });
+                            }
+
+                            // Update the urlCache with a list of URLs.
+                            var urls = [];
+                            forEach(list, function (item) {
+                                if (isDefined(item.url)) {
+                                    urls.push(item.url);
                                 }
                             });
+                            api.urlCache.put(url, urls);
                         }
-
-                        // Update the urlCache with a list of URLs.
-                        var urls = [];
-                        forEach(list, function (item) {
-                            if (isDefined(item.url)) {
-                                urls.push(item.url);
-                            }
-                        });
-                        api.urlCache.put(url, urls);
 
                         deferred.resolve(list);
                     });
@@ -137,23 +150,27 @@
                 },
 
                 loadItem: function (url, options, deferred) {
-                    options = options || {};
+                    options = angular.extend(defaultOptions, options);
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
-                    // Load the item from the cache.
-                    var cached = api.objectCache.get(url);
-                    if (isDefined(cached)) {
-                        deferred.add(cached);
+                    if (options.cache) {
+                        // Load the item from the cache.
+                        var cached = api.objectCache.get(url);
+                        if (isDefined(cached)) {
+                            deferred.add(cached);
+                        }
                     }
 
                     api.load(url, options).then(function (response) {
                         var item = response.data;
-                        if (isUndefined(cached)) {
-                            api.objectCache.put(url, item);
-                            deferred.add(item);
-                        } else if (!equals(cached, item)) {
-                            api.objectCache.put(url, item);
-                            deferred.update(item);
+                        if (options.cache) {
+                            if (isUndefined(cached)) {
+                                api.objectCache.put(url, item);
+                                deferred.add(item);
+                            } else if (!equals(cached, item)) {
+                                api.objectCache.put(url, item);
+                                deferred.update(item);
+                            }
                         }
 
                         deferred.resolve(item);
@@ -162,24 +179,29 @@
                     return deferred.promise;
                 },
 
-                loadOptions: function (url, deferred) {
+                loadOptions: function (url, options, deferred) {
+                    options = angular.extend(defaultOptions, options);
                     deferred = deferred || extQ.defer();
 
-                    // Load the options from the cache.
-                    var cached = api.optionsCache.get(url);
-                    if (isDefined(cached)) {
-                        deferred.resolve(cached);
+                    if (options.cache) {
+                        // Load the options from the cache.
+                        var cached = api.optionsCache.get(url);
+                        if (isDefined(cached)) {
+                            deferred.resolve(cached);
+                        }
                     }
 
                     $http({
                         method: 'OPTIONS',
                         url: url
                     }).then(function (response) {
-                        var obj = {data: response.data, url: url};
-                        if (!equals(cached, obj)) {
-                            api.optionsCache.put(url, obj);
+                        if (options.cache) {
+                            if (!equals(cached, response.data)) {
+                                api.optionsCache.put(url, response.data);
+                            }
                         }
-                        deferred.resolve(obj);
+
+                        deferred.resolve(response.data);
                     }, function (response, status) {
                         deferred.reject({response: response, status: status});
                     });
