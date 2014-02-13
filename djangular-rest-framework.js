@@ -33,10 +33,14 @@
                             data = response.data;
                         }
 
+                        if (angular.isDefined(response.data.count) && angular.isUndefined(options.limit)) {
+                            options.limit = response.data.count;
+                        }
+
                         deferred.update(data);
                         items = items.concat(data);
 
-                        if (angular.isDefined(response.data.next) && items.length < options.limit) {
+                        if (isDefined(response.data.next) && response.data.next !== null && items.length < options.limit) {
                             api.getPage(response.data.next, options, deferred, items);
                         } else {
                             if (isDefined(options.limit)) {
