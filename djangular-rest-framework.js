@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('djangularRestFramework', ['angularExtQ'])
+    angular.module('djangularRestFramework', ['angularExtQ', 'jmdobry.angular-cache'])
         .factory('drf', ['$rootScope', '$http', '$angularCacheFactory', 'extQ', function ($rootScope, $http, $angularCacheFactory, extQ) {
             var equals = angular.equals;
             var forEach = angular.forEach;
