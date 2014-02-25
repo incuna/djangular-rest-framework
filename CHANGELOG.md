@@ -1,3 +1,7 @@
+# 1.2.1
+
+* loadOptions response had the url property removed in 1.2.0, this adds it back.
+
 # 1.2.0
 
 * Add option to turn off usage of cache.
