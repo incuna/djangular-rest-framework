@@ -187,7 +187,7 @@
                         // Load the options from the cache.
                         var cached = api.optionsCache.get(url);
                         if (isDefined(cached)) {
-                            deferred.resolve(cached);
+                            deferred.resolve({data: cached, url: url});
                         }
                     }
 
@@ -201,7 +201,7 @@
                             }
                         }
 
-                        deferred.resolve(response.data);
+                        deferred.resolve({data: response.data, url: url});
                     }, function (response, status) {
                         deferred.reject({response: response, status: status});
                     });
