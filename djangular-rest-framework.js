@@ -85,7 +85,7 @@
 
 
                 loadList: function (url, options, deferred) {
-                    options = angular.extend(defaultOptions, options);
+                    options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
                     if (options.cache) {
@@ -150,7 +150,7 @@
                 },
 
                 loadItem: function (url, options, deferred) {
-                    options = angular.extend(defaultOptions, options);
+                    options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
                     if (options.cache) {
@@ -180,7 +180,7 @@
                 },
 
                 loadOptions: function (url, options, deferred) {
-                    options = angular.extend(defaultOptions, options);
+                    options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer();
 
                     if (options.cache) {

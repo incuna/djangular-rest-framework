@@ -1,3 +1,9 @@
+# 1.2.2
+
+* When extending defaultOptions specify an empty object as the destination,
+  otherwise the defaultOptions object will change as it is specified as the
+  destination.
+
 # 1.2.1
 
 * loadOptions response had the url property removed in 1.2.0, this adds it back.
