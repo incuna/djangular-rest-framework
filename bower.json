@@ -1,6 +1,6 @@
 {
   "name": "djangular-rest-framework",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "homepage": "https://github.com/incuna/djangular-rest-framework",
   "authors": [
     "Marc Tamlyn <marc.tamlyn@gmail.com>",

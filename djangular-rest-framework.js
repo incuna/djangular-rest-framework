@@ -205,6 +205,8 @@
                     }, function (response, status) {
                         deferred.reject({response: response, status: status});
                     });
+
+                    return deferred.promise;
                 }
             };
 

@@ -1,3 +1,7 @@
+# 1.2.3
+
+* loadOptions should always return the promise object.
+
 # 1.2.2
 
 * When extending defaultOptions specify an empty object as the destination,
