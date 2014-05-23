@@ -1,3 +1,7 @@
+# 1.2.4
+
+* Improve dependency matching in `bower.json` to reduce conflicts.
+
 # 1.2.3
 
 * loadOptions should always return the promise object.

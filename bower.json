@@ -1,6 +1,6 @@
 {
   "name": "djangular-rest-framework",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "homepage": "https://github.com/incuna/djangular-rest-framework",
   "authors": [
     "Marc Tamlyn <marc.tamlyn@gmail.com>",
@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "angular": "~1.2",
-    "angular-ext-q": "1.0.1",
-    "angular-cache": "2.1.0"
+    "angular-ext-q": "~1.0",
+    "angular-cache": "~2.1"
   }
 }
