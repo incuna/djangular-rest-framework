@@ -1,8 +1,17 @@
 (function () {
     'use strict';
 
-    angular.module('djangularRestFramework', ['angularExtQ', 'jmdobry.angular-cache'])
-        .factory('drf', ['$rootScope', '$http', '$angularCacheFactory', 'extQ', function ($rootScope, $http, $angularCacheFactory, extQ) {
+    var module = angular.module('djangularRestFramework', [
+        'angularExtQ',
+        'jmdobry.angular-cache'
+    ]);
+
+    module.factory('drf', [
+        '$rootScope',
+        '$http',
+        '$angularCacheFactory',
+        'extQ',
+        function ($rootScope, $http, $angularCacheFactory, extQ) {
             var cacheOptions = {
                 maxAge: 86400000,
                 storageMode: 'localStorage'
@@ -206,5 +215,6 @@
             };
 
             return api;
-        }]);
+        }
+    ]);
 }());
