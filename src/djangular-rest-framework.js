@@ -1,13 +1,16 @@
-(function () {
+(function (angular) {
     'use strict';
 
-    angular.module('djangularRestFramework', ['angularExtQ', 'jmdobry.angular-cache'])
-        .factory('drf', ['$rootScope', '$http', '$angularCacheFactory', 'extQ', function ($rootScope, $http, $angularCacheFactory, extQ) {
-            var equals = angular.equals;
-            var forEach = angular.forEach;
-            var isDefined = angular.isDefined;
-            var isUndefined = angular.isUndefined;
+    var module = angular.module('djangularRestFramework', [
+        'angularExtQ',
+        'jmdobry.angular-cache'
+    ]);
 
+    module.factory('drf', [
+        '$http',
+        '$angularCacheFactory',
+        'extQ',
+        function ($http, $angularCacheFactory, extQ) {
             var cacheOptions = {
                 maxAge: 86400000,
                 storageMode: 'localStorage'
@@ -44,10 +47,10 @@
                         deferred.update(data);
                         items = items.concat(data);
 
-                        if (isDefined(response.data.next) && response.data.next !== null && items.length < options.limit) {
+                        if (angular.isDefined(response.data.next) && response.data.next !== null && items.length < options.limit) {
                             api.getPage(response.data.next, options, deferred, items);
                         } else {
-                            if (isDefined(options.limit)) {
+                            if (angular.isDefined(options.limit)) {
                                 items = items.splice(0, options.limit);
                             }
                             deferred.resolve(items);
@@ -91,12 +94,12 @@
                     if (options.cache) {
                         // Load list of item URLs from urlCache.
                         var cached = api.urlCache.get(url);
-                        if (isDefined(options.limit) && isDefined(cached)) {
+                        if (angular.isDefined(options.limit) && isDefined(cached)) {
                             cached = cached.splice(0, options.limit);
                         }
-                        forEach(cached, function (url) {
+                        angular.forEach(cached, function (url) {
                             var obj = api.objectCache.get(url);
-                            if (isDefined(obj)) {
+                            if (angular.isDefined(obj)) {
                                 deferred.add(obj);
                             }
                         });
@@ -105,14 +108,14 @@
                     var seen = {};
                     api.stream(url, options).update(function (list) {
                         // Stream the list
-                        forEach(list, function (item) {
+                        angular.forEach(list, function (item) {
                             seen[item.url] = item;
                             if (options.cache) {
                                 var cached = api.objectCache.get(item.url);
-                                if (isUndefined(cached)) {
+                                if (angular.isUndefined(cached)) {
                                     api.objectCache.put(item.url, item);
                                     deferred.add(item);
-                                } else if (!equals(cached, item)) {
+                                } else if (!angular.equals(cached, item)) {
                                     api.objectCache.put(item.url, item);
                                     deferred.update(item);
                                 }
@@ -125,8 +128,8 @@
                             // Remove items from the cache if they were not returned
                             // in the list.
                             if (cached) {
-                                forEach(cached, function (url) {
-                                    if (isUndefined(seen[url])) {
+                                angular.forEach(cached, function (url) {
+                                    if (angular.isUndefined(seen[url])) {
                                         deferred.remove(url);
                                         api.objectCache.remove(url);
                                     }
@@ -135,8 +138,8 @@
 
                             // Update the urlCache with a list of URLs.
                             var urls = [];
-                            forEach(list, function (item) {
-                                if (isDefined(item.url)) {
+                            angular.forEach(list, function (item) {
+                                if (angular.isDefined(item.url)) {
                                     urls.push(item.url);
                                 }
                             });
@@ -156,7 +159,7 @@
                     if (options.cache) {
                         // Load the item from the cache.
                         var cached = api.objectCache.get(url);
-                        if (isDefined(cached)) {
+                        if (angular.isDefined(cached)) {
                             deferred.add(cached);
                         }
                     }
@@ -164,10 +167,10 @@
                     api.load(url, options).then(function (response) {
                         var item = response.data;
                         if (options.cache) {
-                            if (isUndefined(cached)) {
+                            if (angular.isUndefined(cached)) {
                                 api.objectCache.put(url, item);
                                 deferred.add(item);
-                            } else if (!equals(cached, item)) {
+                            } else if (!angular.equals(cached, item)) {
                                 api.objectCache.put(url, item);
                                 deferred.update(item);
                             }
@@ -186,7 +189,7 @@
                     if (options.cache) {
                         // Load the options from the cache.
                         var cached = api.optionsCache.get(url);
-                        if (isDefined(cached)) {
+                        if (angular.isDefined(cached)) {
                             deferred.resolve({data: cached, url: url});
                         }
                     }
@@ -196,7 +199,7 @@
                         url: url
                     }).then(function (response) {
                         if (options.cache) {
-                            if (!equals(cached, response.data)) {
+                            if (!angular.equals(cached, response.data)) {
                                 api.optionsCache.put(url, response.data);
                             }
                         }
@@ -211,5 +214,6 @@
             };
 
             return api;
-        }]);
-}());
+        }
+    ]);
+}(window.angular));

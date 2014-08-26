@@ -1,3 +1,7 @@
+# UPCOMING 2.0.0
+
+* Moved main file to `./src`.
+
 # 1.2.4
 
 * Improve dependency matching in `bower.json` to reduce conflicts.
