@@ -7,11 +7,10 @@
     ]);
 
     module.factory('drf', [
-        '$rootScope',
         '$http',
         '$angularCacheFactory',
         'extQ',
-        function ($rootScope, $http, $angularCacheFactory, extQ) {
+        function ($http, $angularCacheFactory, extQ) {
             var cacheOptions = {
                 maxAge: 86400000,
                 storageMode: 'localStorage'
