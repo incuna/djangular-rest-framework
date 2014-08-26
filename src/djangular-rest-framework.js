@@ -8,9 +8,10 @@
 
     module.factory('drf', [
         '$http',
+        '$timeout',
         '$angularCacheFactory',
         'extQ',
-        function ($http, $angularCacheFactory, extQ) {
+        function ($http, $timeout, $angularCacheFactory, extQ) {
             var cacheOptions = {
                 maxAge: 86400000,
                 storageMode: 'localStorage'
@@ -91,18 +92,21 @@
                     options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
+                    var cached;
                     if (options.cache) {
-                        // Load list of item URLs from urlCache.
-                        var cached = api.urlCache.get(url);
-                        if (angular.isDefined(options.limit) && isDefined(cached)) {
-                            cached = cached.splice(0, options.limit);
-                        }
-                        angular.forEach(cached, function (url) {
-                            var obj = api.objectCache.get(url);
-                            if (angular.isDefined(obj)) {
-                                deferred.add(obj);
+                        $timeout(function () {
+                            // Load list of item URLs from urlCache.
+                            cached = api.urlCache.get(url);
+                            if (angular.isDefined(options.limit) && angular.isDefined(cached)) {
+                                cached = cached.splice(0, options.limit);
                             }
-                        });
+                            angular.forEach(cached, function (url) {
+                                var obj = api.objectCache.get(url);
+                                if (angular.isDefined(obj)) {
+                                    deferred.add(obj);
+                                }
+                            });
+                        }, 0);
                     }
 
                     var seen = {};
@@ -127,7 +131,7 @@
                         if (options.cache) {
                             // Remove items from the cache if they were not returned
                             // in the list.
-                            if (cached) {
+                            if (angular.isDefined(cached)) {
                                 angular.forEach(cached, function (url) {
                                     if (angular.isUndefined(seen[url])) {
                                         deferred.remove(url);
@@ -156,12 +160,15 @@
                     options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
+                    var cached;
                     if (options.cache) {
-                        // Load the item from the cache.
-                        var cached = api.objectCache.get(url);
-                        if (angular.isDefined(cached)) {
-                            deferred.add(cached);
-                        }
+                        $timeout(function () {
+                            // Load the item from the cache.
+                            cached = api.objectCache.get(url);
+                            if (angular.isDefined(cached)) {
+                                deferred.add(cached);
+                            }
+                        }, 0);
                     }
 
                     api.load(url, options).then(function (response) {
@@ -186,12 +193,15 @@
                     options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer();
 
+                    var cached;
                     if (options.cache) {
-                        // Load the options from the cache.
-                        var cached = api.optionsCache.get(url);
-                        if (angular.isDefined(cached)) {
-                            deferred.resolve({data: cached, url: url});
-                        }
+                        $timeout(function () {
+                            // Load the options from the cache.
+                            cached = api.optionsCache.get(url);
+                            if (angular.isDefined(cached)) {
+                                deferred.resolve({data: cached, url: url});
+                            }
+                        }, 0);
                     }
 
                     $http({

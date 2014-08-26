@@ -1,6 +1,7 @@
-# UPCOMING 2.0.0
+# 2.0.0
 
 * Moved main file to `./src`.
+* Cached items are now updated with `deferred.add` asynchronously.
 
 # 1.2.4
 
