@@ -92,11 +92,12 @@
                     options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
+                    var cached;
                     if (options.cache) {
                         $timeout(function () {
                             // Load list of item URLs from urlCache.
-                            var cached = api.urlCache.get(url);
-                            if (angular.isDefined(options.limit) && isDefined(cached)) {
+                            cached = api.urlCache.get(url);
+                            if (angular.isDefined(options.limit) && angular.isDefined(cached)) {
                                 cached = cached.splice(0, options.limit);
                             }
                             angular.forEach(cached, function (url) {
@@ -130,7 +131,7 @@
                         if (options.cache) {
                             // Remove items from the cache if they were not returned
                             // in the list.
-                            if (cached) {
+                            if (angular.isDefined(cached)) {
                                 angular.forEach(cached, function (url) {
                                     if (angular.isUndefined(seen[url])) {
                                         deferred.remove(url);
@@ -159,10 +160,11 @@
                     options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
+                    var cached;
                     if (options.cache) {
                         $timeout(function () {
                             // Load the item from the cache.
-                            var cached = api.objectCache.get(url);
+                            cached = api.objectCache.get(url);
                             if (angular.isDefined(cached)) {
                                 deferred.add(cached);
                             }
@@ -191,10 +193,11 @@
                     options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer();
 
+                    var cached;
                     if (options.cache) {
                         $timeout(function () {
                             // Load the options from the cache.
-                            var cached = api.optionsCache.get(url);
+                            cached = api.optionsCache.get(url);
                             if (angular.isDefined(cached)) {
                                 deferred.resolve({data: cached, url: url});
                             }
