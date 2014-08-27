@@ -1,3 +1,10 @@
+# 2.0.1
+
+* An empty params object has been added to the `defaultOptions`.
+* `loadList` now keeps track of urls that have been resolved with
+  `deferred.add` so that if an object that was in the cache but not
+  in the urlCache will now be added.
+
 # 2.0.0
 
 * Moved main file to `./src`.
