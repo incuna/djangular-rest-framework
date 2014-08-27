@@ -35,7 +35,8 @@
             };
 
             var defaultOptions = {
-                cache: true
+                cache: true,
+                params: {}
             };
 
             var api = {
