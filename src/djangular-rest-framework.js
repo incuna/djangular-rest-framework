@@ -12,13 +12,11 @@
         '$angularCacheFactory',
         'extQ',
         function ($http, $timeout, $angularCacheFactory, extQ) {
-            var objectToQueryString = function(obj, prefix){
+            var objectToQueryString = function(obj){
                 var str = [];
-                for (var p in obj) {
-                    var k = prefix ? prefix + '[' + p + ']' : p,
-                    v = obj[p];
-                    str.push(angular.isObject(v) ? objectToQueryString(v, k) : (k) + '=' + encodeURIComponent(v));
-                }
+                angular.forEach(obj, function (value, key) {
+                    str.push(key + '=' + encodeURIComponent(value));
+                });
                 return str.join('&');
             };
 
