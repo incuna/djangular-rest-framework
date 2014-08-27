@@ -124,6 +124,7 @@
 
                     var cacheUrlKey = formatUrl(url, options.params);
                     var cachedUrls;
+                    var addedUrls = [];
                     if (options.cache) {
                         // Load list of item URLs from urlCache.
                         cachedUrls = api.urlCache.get(cacheUrlKey);
@@ -134,8 +135,9 @@
                         $timeout(function () {
                             angular.forEach(cachedUrls, function (url) {
                                 var obj = api.objectCache.get(url);
-                                if (angular.isDefined(obj)) {
+                                if (angular.isDefined(obj) && addedUrls.indexOf(obj.url) === -1) {
                                     deferred.add(obj);
+                                    addedUrls.push(obj.url);
                                 }
                             });
                         }, 0);
@@ -153,9 +155,15 @@
                                     if (angular.isUndefined(cached)) {
                                         api.objectCache.put(item.url, item);
                                         deferred.add(item);
-                                    } else if (!angular.equals(cached, item)) {
-                                        api.objectCache.put(item.url, item);
-                                        deferred.update(item);
+                                        addedUrls.push(item.url);
+                                    } else {
+                                        if (!angular.equals(cached, item)) {
+                                            api.objectCache.put(item.url, item);
+                                            deferred.update(item);
+                                        } else if (addedUrls.indexOf(item.url) === -1) {
+                                            deferred.add(item);
+                                            addedUrls.push(item.url);
+                                        }
                                     }
                                 } else {
                                     deferred.add(item);
