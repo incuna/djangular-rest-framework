@@ -2,6 +2,8 @@
 
 * Moved main file to `./src`.
 * Cached items are now updated with `deferred.add` asynchronously.
+* `options.params` are now added to the url that's used as the cache key.
+* `options.limit` has been deprecated in favour of `options.params.limit`.
 
 # 1.2.4
 
