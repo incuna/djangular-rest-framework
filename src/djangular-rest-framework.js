@@ -78,7 +78,7 @@
                         // Concat the items array with the new data.
                         items = items.concat(data);
 
-                        // If we have more pages to load then call this method until we reached the limt/end, otherwise resolve the promise
+                        // If we have more pages to load then call this method until we reached the limit/end, otherwise resolve the promise
                         // with the list of items.
                         if (angular.isDefined(response.data.next) && response.data.next !== null && items.length < options.params.limit) {
                             api.getPage(response.data.next, options, deferred, items);
