@@ -1,3 +1,8 @@
+# 2.1.0
+
+* All `$http` calls now extend the options object. This will result in all
+  `$http` requests having `cache: true` by default.
+
 # 2.0.1
 
 * An empty params object has been added to the `defaultOptions`.
