@@ -45,51 +45,53 @@
                 objectCache: $angularCacheFactory('objectCache', cacheOptions),
 
                 getPage: function (url, options, deferred, items) {
-                    $http({
+                    var httpOptions = angular.extend({
                         method: 'GET',
-                        url: url,
-                        params: options.params
-                    }).then(function (response) {
-                        // If the response has pages it will be structured
-                        // differently.
-                        var data;
-                        if (angular.isDefined(response.data.results)) {
-                            data = response.data.results;
-                        } else {
-                            data = response.data;
-                        }
+                        url: url
+                    }, options);
 
-                        // If the response countains a count then set the limit.
-                        if (angular.isDefined(response.data.count) && angular.isUndefined(options.params.limit)) {
-                            options.params.limit = response.data.count;
-                        }
+                    $http(httpOptions)
+                        .then(function (response) {
+                            // If the response has pages it will be structured
+                            // differently.
+                            var data;
+                            if (angular.isDefined(response.data.results)) {
+                                data = response.data.results;
+                            } else {
+                                data = response.data;
+                            }
 
-                        // Check the current length of the items list.
-                        var itemsLength = items.length;
+                            // If the response countains a count then set the limit.
+                            if (angular.isDefined(response.data.count) && angular.isUndefined(options.params.limit)) {
+                                options.params.limit = response.data.count;
+                            }
 
-                        // If there's a limit set and the length of the data and items exceeds that
-                        // then we need to trim the data list.
-                        if (angular.isDefined(options.params.limit) && (itemsLength + data.length) > options.params.limit) {
-                            data = data.splice(0, options.params.limit - itemsLength);
-                        }
+                            // Check the current length of the items list.
+                            var itemsLength = items.length;
 
-                        // Update the deferred object with the data list.
-                        deferred.update(data);
+                            // If there's a limit set and the length of the data and items exceeds that
+                            // then we need to trim the data list.
+                            if (angular.isDefined(options.params.limit) && (itemsLength + data.length) > options.params.limit) {
+                                data = data.splice(0, options.params.limit - itemsLength);
+                            }
 
-                        // Concat the items array with the new data.
-                        items = items.concat(data);
+                            // Update the deferred object with the data list.
+                            deferred.update(data);
 
-                        // If we have more pages to load then call this method until we reached the limit/end, otherwise resolve the promise
-                        // with the list of items.
-                        if (angular.isDefined(response.data.next) && response.data.next !== null && items.length < options.params.limit) {
-                            api.getPage(response.data.next, options, deferred, items);
-                        } else {
-                            deferred.resolve(items);
-                        }
+                            // Concat the items array with the new data.
+                            items = items.concat(data);
 
-                    }, function (response, status) {
-                        deferred.reject({response: response, status: status});
-                    });
+                            // If we have more pages to load then call this method until we reached the limit/end, otherwise resolve the promise
+                            // with the list of items.
+                            if (angular.isDefined(response.data.next) && response.data.next !== null && items.length < options.params.limit) {
+                                api.getPage(response.data.next, options, deferred, items);
+                            } else {
+                                deferred.resolve(items);
+                            }
+
+                        }, function (response, status) {
+                            deferred.reject({response: response, status: status});
+                        });
                 },
 
                 stream: function (url, options) {
@@ -102,21 +104,13 @@
                 },
 
                 load: function (url, options) {
-                    var deferred = extQ.defer();
-
-                    $http({
+                    var httpOptions = angular.extend({
                         method: 'GET',
-                        url: url,
-                        params: options.params
-                    }).then(function (response) {
-                        deferred.resolve(response);
-                    }, function (response, status) {
-                        deferred.reject({response: response, status: status});
-                    });
+                        url: url
+                    }, options);
 
-                    return deferred.promise;
+                    return $http(httpOptions);
                 },
-
 
                 loadList: function (url, options, deferred) {
                     options = angular.extend({}, defaultOptions, options);
@@ -270,4 +264,3 @@
         }
     ]);
 }(window.angular));
-
