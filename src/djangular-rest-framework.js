@@ -252,9 +252,7 @@
                         }
 
                         deferred.resolve({data: response.data, url: url});
-                    }, function (response, status) {
-                        deferred.reject({response: response, status: status});
-                    });
+                    }, deferred.reject);
 
                     return deferred.promise;
                 }
