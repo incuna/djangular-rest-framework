@@ -89,9 +89,7 @@
                                 deferred.resolve(items);
                             }
 
-                        }, function (response, status) {
-                            deferred.reject({response: response, status: status});
-                        });
+                        }, deferred.reject);
                 },
 
                 stream: function (url, options) {
