@@ -1,3 +1,7 @@
+# 3.0.1
+
+* Fix destructive update of `options.params.limit`
+
 # 3.0.0
 
 * All `$http` calls now extend the options object. This will result in all
