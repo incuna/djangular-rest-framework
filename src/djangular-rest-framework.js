@@ -61,9 +61,11 @@
                                 data = response.data;
                             }
 
+                            var limit = options.params.limit;
+
                             // If the response countains a count then set the limit.
-                            if (angular.isDefined(response.data.count) && angular.isUndefined(options.params.limit)) {
-                                options.params.limit = response.data.count;
+                            if (angular.isDefined(response.data.count) && angular.isUndefined(limit)) {
+                                limit = response.data.count;
                             }
 
                             // Check the current length of the items list.
@@ -71,8 +73,8 @@
 
                             // If there's a limit set and the length of the data and items exceeds that
                             // then we need to trim the data list.
-                            if (angular.isDefined(options.params.limit) && (itemsLength + data.length) > options.params.limit) {
-                                data = data.splice(0, options.params.limit - itemsLength);
+                            if (angular.isDefined(limit) && (itemsLength + data.length) > limit) {
+                                data = data.splice(0, limit - itemsLength);
                             }
 
                             // Update the deferred object with the data list.
@@ -83,7 +85,7 @@
 
                             // If we have more pages to load then call this method until we reached the limit/end, otherwise resolve the promise
                             // with the list of items.
-                            if (angular.isDefined(response.data.next) && response.data.next !== null && items.length < options.params.limit) {
+                            if (angular.isDefined(response.data.next) && response.data.next !== null && items.length < limit) {
                                 api.getPage(response.data.next, options, deferred, items);
                             } else {
                                 deferred.resolve(items);
