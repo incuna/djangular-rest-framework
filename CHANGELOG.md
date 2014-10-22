@@ -1,3 +1,8 @@
+# 3.1.0
+
+* Added config provider.
+* Added cacheEnabled option to config provider.
+
 # 3.0.1
 
 * Fix destructive update of `options.params.limit`
