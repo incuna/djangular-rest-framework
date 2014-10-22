@@ -1,3 +1,7 @@
+# 3.1.0
+
+* `drf.loadItem` and `drf.loadList` now reject the deferred object on errors.
+
 # 3.0.1
 
 * Fix destructive update of `options.params.limit`
