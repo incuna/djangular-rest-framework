@@ -6,12 +6,29 @@
         'jmdobry.angular-cache'
     ]);
 
+    module.provider('drfConfig', function () {
+        var cacheEnabled = true;
+        return {
+            $get: function () {
+                return {
+                    cacheEnabled: function () {
+                        return cacheEnabled;
+                    }
+                };
+            },
+            setCacheEnabled: function (value) {
+                cacheEnabled = value;
+            }
+        };
+    });
+
     module.factory('drf', [
         '$http',
         '$timeout',
+        'drfConfig',
         '$angularCacheFactory',
         'extQ',
-        function ($http, $timeout, $angularCacheFactory, extQ) {
+        function ($http, $timeout, drfConfig, $angularCacheFactory, extQ) {
             var objectToQueryString = function(obj){
                 var str = [];
                 angular.forEach(obj, function (value, key) {
@@ -29,6 +46,8 @@
                 return url;
             };
 
+            var cacheEnabled = drfConfig.cacheEnabled();
+
             var cacheOptions = {
                 maxAge: 86400000,
                 storageMode: 'localStorage'
@@ -40,9 +59,9 @@
             };
 
             var api = {
-                optionsCache: $angularCacheFactory('optionsCache', cacheOptions),
-                urlCache: $angularCacheFactory('urlCache', cacheOptions),
-                objectCache: $angularCacheFactory('objectCache', cacheOptions),
+                optionsCache: cacheEnabled ? $angularCacheFactory('optionsCache', cacheOptions) : undefined,
+                urlCache: cacheEnabled ? $angularCacheFactory('urlCache', cacheOptions) : undefined,
+                objectCache: cacheEnabled ? $angularCacheFactory('objectCache', cacheOptions) : undefined,
 
                 getPage: function (url, options, deferred, items) {
                     var httpOptions = angular.extend({
@@ -119,7 +138,7 @@
                     var cacheUrlKey = formatUrl(url, options.params);
                     var cachedUrls;
                     var addedUrls = [];
-                    if (options.cacheItems) {
+                    if (cacheEnabled && options.cacheItems) {
                         // Load list of item URLs from urlCache.
                         cachedUrls = api.urlCache.get(cacheUrlKey);
                         if (angular.isDefined(options.params.limit) && angular.isDefined(cachedUrls)) {
@@ -143,7 +162,7 @@
                             // Stream the list
                             angular.forEach(list, function (item) {
                                 seen[item.url] = item;
-                                if (options.cacheItems) {
+                                if (cacheEnabled && options.cacheItems) {
                                     var cached = api.objectCache.get(item.url);
 
                                     if (angular.isUndefined(cached)) {
@@ -165,7 +184,7 @@
                             });
                         })
                         .then(function (list) {
-                            if (options.cacheItems) {
+                            if (cacheEnabled && options.cacheItems) {
                                 // Remove items from the cache if they were not returned
                                 // in the list.
                                 if (angular.isDefined(cachedUrls)) {
@@ -198,7 +217,7 @@
                     deferred = deferred || extQ.defer(['add', 'update', 'remove']);
 
                     var cachedObject;
-                    if (options.cacheItems) {
+                    if (cacheEnabled && options.cacheItems) {
                         $timeout(function () {
                             // Load the item from the cache.
                             cachedObject = api.objectCache.get(url);
@@ -210,7 +229,7 @@
 
                     api.load(url, options).then(function (response) {
                         var item = response.data;
-                        if (options.cacheItems) {
+                        if (cacheEnabled && options.cacheItems) {
                             if (angular.isUndefined(cachedObject)) {
                                 api.objectCache.put(url, item);
                                 deferred.add(item);
@@ -231,7 +250,7 @@
                     deferred = deferred || extQ.defer();
 
                     var cachedObject;
-                    if (options.cacheItems) {
+                    if (cacheEnabled && options.cacheItems) {
                         $timeout(function () {
                             // Load the options from the cache.
                             cachedObject = api.optionsCache.get(url);
@@ -245,7 +264,7 @@
                         method: 'OPTIONS',
                         url: url
                     }).then(function (response) {
-                        if (options.cacheItems) {
+                        if (cacheEnabled && options.cacheItems) {
                             if (!angular.equals(cachedObject, response.data)) {
                                 api.optionsCache.put(url, response.data);
                             }
