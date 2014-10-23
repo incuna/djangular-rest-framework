@@ -2,6 +2,7 @@
 
 * Added config provider.
 * Added cacheEnabled option to config provider.
+* `drf.loadItem` and `drf.loadList` now reject the deferred object on errors.
 
 # 3.0.1
 

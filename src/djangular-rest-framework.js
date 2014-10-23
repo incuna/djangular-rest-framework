@@ -207,7 +207,7 @@
                             }
 
                             deferred.resolve(list);
-                        });
+                        }, deferred.reject);
 
                     return deferred.promise;
                 },
@@ -240,7 +240,7 @@
                         }
 
                         deferred.resolve(item);
-                    });
+                    }, deferred.reject);
 
                     return deferred.promise;
                 },
