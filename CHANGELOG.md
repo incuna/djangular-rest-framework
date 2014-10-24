@@ -1,3 +1,10 @@
+# 4.0.0
+
+* The `verifyIntegrity` option in angular-cache is now false by default
+  due to the major performance issues it imposes.
+* `cacheOptions` and `defaultOptions` can now be configured in the drfConfigProvider
+  The custom options will be merged with the default set in djangular-rest-framework.
+
 # 3.1.0
 
 * Added config provider.

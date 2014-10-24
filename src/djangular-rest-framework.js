@@ -8,16 +8,38 @@
 
     module.provider('drfConfig', function () {
         var cacheEnabled = true;
+        var cacheOptions = {
+            maxAge: 86400000,
+            storageMode: 'localStorage',
+            verifyIntegrity: false
+        };
+        var defaultOptions = {
+            cacheItems: true,
+            params: {}
+        };
+
         return {
             $get: function () {
                 return {
                     cacheEnabled: function () {
                         return cacheEnabled;
+                    },
+                    cacheOptions: function () {
+                        return cacheOptions;
+                    },
+                    defaultOptions: function () {
+                        return defaultOptions;
                     }
                 };
             },
             setCacheEnabled: function (value) {
                 cacheEnabled = value;
+            },
+            setCacheOptions: function (value) {
+                cacheOptions = angular.extend({}, cacheOptions, value);
+            },
+            setDefaultOptions: function (value) {
+                defaultOptions = angular.extend({}, defaultOptions, value);
             }
         };
     });
@@ -47,16 +69,8 @@
             };
 
             var cacheEnabled = drfConfig.cacheEnabled();
-
-            var cacheOptions = {
-                maxAge: 86400000,
-                storageMode: 'localStorage'
-            };
-
-            var defaultOptions = {
-                cacheItems: true,
-                params: {}
-            };
+            var cacheOptions = drfConfig.cacheOptions();
+            var defaultOptions = drfConfig.defaultOptions();
 
             var api = {
                 optionsCache: cacheEnabled ? $angularCacheFactory('optionsCache', cacheOptions) : undefined,
