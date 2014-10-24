@@ -13,6 +13,10 @@
             storageMode: 'localStorage',
             verifyIntegrity: false
         };
+        var defaultOptions = {
+            cacheItems: true,
+            params: {}
+        };
 
         return {
             $get: function () {
@@ -22,6 +26,9 @@
                     },
                     cacheOptions: function () {
                         return cacheOptions;
+                    },
+                    defaultOptions: function () {
+                        return defaultOptions;
                     }
                 };
             },
@@ -30,6 +37,9 @@
             },
             setCacheOptions: function (value) {
                 cacheOptions = angular.extend({}, cacheOptions, value);
+            },
+            setDefaultOptions: function (value) {
+                defaultOptions = angular.extend({}, defaultOptions, value);
             }
         };
     });
@@ -59,13 +69,8 @@
             };
 
             var cacheEnabled = drfConfig.cacheEnabled();
-
             var cacheOptions = drfConfig.cacheOptions();
-
-            var defaultOptions = {
-                cacheItems: true,
-                params: {}
-            };
+            var defaultOptions = drfConfig.defaultOptions();
 
             var api = {
                 optionsCache: cacheEnabled ? $angularCacheFactory('optionsCache', cacheOptions) : undefined,
