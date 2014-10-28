@@ -1,3 +1,7 @@
+# 4.0.1
+
+* Update the main property in `bower.json`.
+
 # 4.0.0
 
 * The `verifyIntegrity` option in angular-cache is now false by default
