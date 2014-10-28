@@ -7,7 +7,7 @@
     "Perry Roper <perryroper@gmail.com>"
   ],
   "description": "AngularJS interface for Django Rest Framework (DRF)",
-  "main": "djangular-rest-framework.js",
+  "main": "src/djangular-rest-framework.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
