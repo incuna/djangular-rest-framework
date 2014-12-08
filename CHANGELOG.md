@@ -1,7 +1,11 @@
-# 4.0.2
+# 4.0.3
 
 * Remove cache from `loadOptions`. The cache stopped the response from the server
  being resolved.
+
+# 4.0.2
+
+* Bump angular-cache dependency
 
 # 4.0.1
 
