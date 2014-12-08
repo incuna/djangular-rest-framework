@@ -1,3 +1,8 @@
+# 4.0.2
+
+* Remove cache from `loadOptions`. The cache stopped the response from the server
+ being resolved.
+
 # 4.0.1
 
 * Update the main property in `bower.json`.

@@ -263,27 +263,10 @@
                     options = angular.extend({}, defaultOptions, options);
                     deferred = deferred || extQ.defer();
 
-                    var cachedObject;
-                    if (cacheEnabled && options.cacheItems) {
-                        $timeout(function () {
-                            // Load the options from the cache.
-                            cachedObject = api.optionsCache.get(url);
-                            if (angular.isDefined(cachedObject)) {
-                                deferred.resolve({data: cachedObject, url: url});
-                            }
-                        }, 0);
-                    }
-
                     $http({
                         method: 'OPTIONS',
                         url: url
                     }).then(function (response) {
-                        if (cacheEnabled && options.cacheItems) {
-                            if (!angular.equals(cachedObject, response.data)) {
-                                api.optionsCache.put(url, response.data);
-                            }
-                        }
-
                         deferred.resolve({data: response.data, url: url});
                     }, deferred.reject);
 
