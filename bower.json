@@ -25,8 +25,8 @@
     "api"
   ],
   "dependencies": {
-    "angular": "~1.2",
-    "angular-ext-q": "~1.0",
-    "angular-cache": "~2.4"
+    "angular": "1.5.3",
+    "angular-ext-q": "git@github.com:incuna/angular-ext-q.git#01da7ca32a3ad26d27df013cb8bec1ce48337f8b",
+    "angular-cache": "2.4.1"
   }
 }
