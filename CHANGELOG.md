@@ -1,4 +1,4 @@
-# Upcoming
+# 4.1.0
 
 * Upgrade Angular compatibility to include 1.3, 1.4, and 1.5.
 * Upgrade angular-ext-q to version 1.x
