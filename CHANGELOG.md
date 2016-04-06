@@ -1,3 +1,7 @@
+# Upcoming
+
+* Upgrade Angular compatibility to include 1.3, 1.4, and 1.5.
+
 # 4.0.3
 
 * Remove cache from `loadOptions`. The cache stopped the response from the server
