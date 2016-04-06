@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "angular": "1.2 - 1.5",
-    "angular-ext-q": "1.1.0",
-    "angular-cache": "~2.4"
+    "angular-ext-q": "1.x",
+    "angular-cache": "2.4.x"
   }
 }
