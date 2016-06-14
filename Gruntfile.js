@@ -7,7 +7,7 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jscs');
-    
+
     grunt.initConfig({
         config: {
             files: {
@@ -36,5 +36,9 @@ module.exports = function (grunt) {
         'jshint',
         'jscs'
     ]);
+
+    grunt.registerTask('test', 'Run the tests.', function (env) {
+        'lint'
+    });
 
 };
