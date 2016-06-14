@@ -2,6 +2,7 @@
 * Split the code into seperate files.
 * Add file linting.
 * Add travis file.
+* Add karma task.
 
 ## 4.1.0
 
