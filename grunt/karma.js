@@ -1,6 +1,7 @@
-'use strict';
+/* jshint node: true */
 
 module.exports = function (grunt) {
+    'use strict';
 
     grunt.config.merge({
         karma: {

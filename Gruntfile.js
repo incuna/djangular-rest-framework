@@ -1,6 +1,8 @@
+/* jshint node: true */
+
 module.exports = function (grunt) {
     'use strict';
-    
+
     if (grunt.option('help')) {
         require('load-grunt-tasks')(grunt);
     } else {
@@ -57,9 +59,6 @@ module.exports = function (grunt) {
         var karmaTarget = 'dev';
         if (grunt.option('debug')) {
             karmaTarget = 'debug';
-        }
-        if (grunt.option('verbose')) {
-            karmaTask = 'verbose';
         }
         if (env === 'ci' || env === 'travis') {
             karmaTarget = 'ci';
