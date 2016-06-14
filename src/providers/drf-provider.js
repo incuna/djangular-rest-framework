@@ -1,50 +1,12 @@
 (function (angular) {
     'use strict';
 
-    var module = angular.module('djangularRestFramework', [
+    var drf = angular.module('drf-provider', [
         'angularExtQ',
         'jmdobry.angular-cache'
     ]);
 
-    module.provider('drfConfig', function () {
-        var cacheEnabled = true;
-        var cacheOptions = {
-            maxAge: 86400000,
-            storageMode: 'localStorage',
-            verifyIntegrity: false
-        };
-        var defaultOptions = {
-            cacheItems: true,
-            params: {}
-        };
-
-        return {
-            $get: function () {
-                return {
-                    cacheEnabled: function () {
-                        return cacheEnabled;
-                    },
-                    cacheOptions: function () {
-                        return cacheOptions;
-                    },
-                    defaultOptions: function () {
-                        return defaultOptions;
-                    }
-                };
-            },
-            setCacheEnabled: function (value) {
-                cacheEnabled = value;
-            },
-            setCacheOptions: function (value) {
-                cacheOptions = angular.extend({}, cacheOptions, value);
-            },
-            setDefaultOptions: function (value) {
-                defaultOptions = angular.extend({}, defaultOptions, value);
-            }
-        };
-    });
-
-    module.factory('drf', [
+    drf.factory('drf', [
         '$http',
         '$timeout',
         'drfConfig',
