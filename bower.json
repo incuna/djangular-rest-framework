@@ -23,6 +23,10 @@
     "drf",
     "api"
   ],
+  "devDependencies": {
+    "angular-mocks": "1.4 - 1.5",
+    "jquery": "2.x"
+  },
   "dependencies": {
     "angular": "1.2 - 1.5",
     "angular-ext-q": "1.x",

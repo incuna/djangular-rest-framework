@@ -1,7 +1,6 @@
-'use strict';
-
 module.exports = function (grunt) {
-
+    'use strict';
+    
     if (grunt.option('help')) {
         require('load-grunt-tasks')(grunt);
     } else {
@@ -18,7 +17,10 @@ module.exports = function (grunt) {
             modules: 'src',
             files: {
                 lint: [
-                    'src/**/*.js'
+                    'src/**/*.js',
+                    '<%= config.files.karmaTests %>',
+                    './grunt/**/*.js',
+                    'Gruntfile.js'
                 ],
                 karmaTests: 'tests/unit/**/*.js'
             }
@@ -36,7 +38,7 @@ module.exports = function (grunt) {
                 config: '.jscsrc'
             },
             src: '<%= config.files.lint %>'
-        },
+        }
     });
 
     // Load external grunt task config.

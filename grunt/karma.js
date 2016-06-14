@@ -10,12 +10,11 @@ module.exports = function (grunt) {
                     // Jasmine helpers.
                     'node_modules/jasmine-expect/dist/jasmine-matchers.js',
 
-                    // Angular init.
-                    '<%= config.lib %>/angular/angular.js',
-
-
                     // Angular libraries.
+                    '<%= config.lib %>/angular/angular.js',
                     '<%= config.lib %>/angular-cache/dist/angular-cache.js',
+                    '<%= config.lib %>/angular-ext-q/angular-ext-q.js',
+                    '<%= config.lib %>/angular-mocks/angular-mocks.js',
 
                     // Init files first, if any, to register modules.
                     '<%= config.modules %>/**/init.js',
