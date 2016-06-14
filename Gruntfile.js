@@ -2,18 +2,25 @@
 
 module.exports = function (grunt) {
 
-    // Load external grunt task config.
-    grunt.loadTasks('./grunt');
+    if (grunt.option('help')) {
+        require('load-grunt-tasks')(grunt);
+    } else {
+        require('jit-grunt')(grunt, {
+            force: 'grunt-force-task'
+        });
+    }
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-jscs');
+    require('time-grunt')(grunt);
 
     grunt.initConfig({
         config: {
+            lib: 'bower_components',
+            modules: 'src',
             files: {
                 lint: [
                     'src/**/*.js'
-                ]
+                ],
+                karmaTests: 'tests/unit/**/*.js'
             }
         },
         jshint: {
@@ -29,8 +36,15 @@ module.exports = function (grunt) {
                 config: '.jscsrc'
             },
             src: '<%= config.files.lint %>'
-        }
+        },
     });
+
+    // Load external grunt task config.
+    grunt.loadTasks('./grunt');
+
+    grunt.registerTask('default', [
+        'test'
+    ]);
 
     grunt.registerTask('lint', 'Run the JS linters.', [
         'jshint',
@@ -38,7 +52,36 @@ module.exports = function (grunt) {
     ]);
 
     grunt.registerTask('test', 'Run the tests.', function (env) {
-        'lint'
+        var karmaTarget = 'dev';
+        if (grunt.option('debug')) {
+            karmaTarget = 'debug';
+        }
+        if (grunt.option('verbose')) {
+            karmaTask = 'verbose';
+        }
+        if (env === 'ci' || env === 'travis') {
+            karmaTarget = 'ci';
+        }
+        grunt.task.run([
+            'force:lint',
+            'force:karma:' + karmaTarget,
+            'errorcodes'
+        ]);
+    });
+
+    grunt.registerTask('travis', 'Run the tests in Travis', [
+        'test:travis'
+    ]);
+
+    // This is used in combination with grunt-force-task to make the most of a
+    // Travis build, so all tasks can run but the build will fail if any of the
+    // tasks failed/errored.
+    grunt.registerTask('errorcodes', 'Fatally error if any errors or warnings have occurred but Grunt has been forced to continue', function () {
+        grunt.log.writeln('errorcount: ' + grunt.fail.errorcount);
+        grunt.log.writeln('warncount: ' + grunt.fail.warncount);
+        if (grunt.fail.warncount > 0 || grunt.fail.errorcount > 0) {
+            grunt.fatal('Errors have occurred.');
+        }
     });
 
 };
