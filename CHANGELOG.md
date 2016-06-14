@@ -1,6 +1,7 @@
 ### Upcoming
 * Split the code into seperate files.
 * Add file linting.
+* Add travis file.
 
 ## 4.1.0
 
