@@ -1,5 +1,6 @@
 ### Upcoming
 * Split the code into seperate files.
+* Add file linting.
 
 ## 4.1.0
 
