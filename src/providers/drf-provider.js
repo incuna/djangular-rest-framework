@@ -230,7 +230,8 @@
                         url: url
                     }).then(function (response) {
                         deferred.resolve({
-                            data: response.data, url: url
+                            data: response.data,
+                            url: url
                         });
                     }, deferred.reject);
 
