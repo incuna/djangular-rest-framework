@@ -13,7 +13,7 @@
         '$angularCacheFactory',
         'extQ',
         function ($http, $timeout, drfConfig, $angularCacheFactory, extQ) {
-            var objectToQueryString = function(obj){
+            var objectToQueryString = function (obj) {
                 var str = [];
                 angular.forEach(obj, function (value, key) {
                     str.push(key + '=' + encodeURIComponent(value));
@@ -229,7 +229,9 @@
                         method: 'OPTIONS',
                         url: url
                     }).then(function (response) {
-                        deferred.resolve({data: response.data, url: url});
+                        deferred.resolve({
+                            data: response.data, url: url
+                        });
                     }, deferred.reject);
 
                     return deferred.promise;
