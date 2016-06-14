@@ -1,0 +1,25 @@
+language: node_js
+
+node_js:
+    - '5.0.0'
+
+notifications:
+    email: false
+
+cache:
+  directories:
+    - $HOME/.npm
+
+sudo: false
+
+before_script:
+    # Start webserver before other tasks so it has time to boot.
+    - 'export DISPLAY=:99.0'
+    - 'sh -e /etc/init.d/xvfb start'
+    # Install packages. npm install is run by default for node_js language type.
+    - npm install -g bower grunt-cli
+    - yes no | bower install --verbose
+    - npm install
+
+script:
+    - grunt test
