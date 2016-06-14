@@ -1,8 +1,10 @@
 ### Upcoming
+
 * Split the code into seperate files.
 * Add file linting.
 * Add travis file.
 * Add karma task.
+* Testing the config code.
 
 ## 4.1.0
 
