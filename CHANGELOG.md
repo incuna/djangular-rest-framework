@@ -1,5 +1,5 @@
 ### Upcoming
-* Move the functions into there own files.
+* Split the code into seperate files.
 
 ## 4.1.0
 
