@@ -2,6 +2,7 @@
 * Split the code into seperate files.
 * Add file linting.
 * Add travis file.
+* Add karma tests
 
 ## 4.1.0
 
