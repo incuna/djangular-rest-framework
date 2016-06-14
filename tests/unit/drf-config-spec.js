@@ -1,6 +1,5 @@
 /* global beforeEach, module, inject, describe, it, expect */
 
-
 (function () {
 
     'use strict';
@@ -30,5 +29,5 @@
             expect(this.drfConfig.defaultOptions().cacheItems).toBe(true);
         });
 
-    })
+    });
 }());
