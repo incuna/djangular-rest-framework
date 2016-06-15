@@ -31,6 +31,6 @@
     "angular": "1.2 - 1.5",
     "angular-ext-q": "1.x",
     "angular-cache": "2.4.x",
-    "lodash": "4.0.1"
+    "lodash": "4.x"
   }
 }
