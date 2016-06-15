@@ -5,6 +5,8 @@
 * Add travis file.
 * Add karma task.
 * Testing the config code.
+* Add filter to loop through an array and return the display_name.
+* Add lodash dependency include any version >= 4 and less than 5 .
 
 ## 4.1.0
 
