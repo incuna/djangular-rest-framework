@@ -6,6 +6,7 @@
 * Add karma task.
 * Testing the config code.
 * Add filter to loop through an array and return the display_name.
+* Add lodash dependency version 4.0.1.
 
 ## 4.1.0
 
