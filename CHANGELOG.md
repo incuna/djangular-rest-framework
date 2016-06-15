@@ -5,6 +5,7 @@
 * Add travis file.
 * Add karma task.
 * Testing the config code.
+* Add filter to loop through an array and return the display_name.
 
 ## 4.1.0
 
