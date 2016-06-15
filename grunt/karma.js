@@ -17,7 +17,6 @@ module.exports = function (grunt) {
                     '<%= config.lib %>/angular-ext-q/angular-ext-q.js',
                     '<%= config.lib %>/angular-mocks/angular-mocks.js',
 
-                    '<%= config.lib %>/jquery/dist/jquery.js',
                     '<%= config.lib %>/lodash/dist/lodash.js',
 
                     // Init files first, if any, to register modules.
