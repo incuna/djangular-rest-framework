@@ -25,7 +25,7 @@
             return displayName;
 
         }, function (item, array) {
-            return item;
+            return item + JSON.stringify(array)
         });
 
     });
