@@ -13,6 +13,7 @@
 
             inject(function (_drfDisplayNameFilter_) {
                 displayNameFilter = _drfDisplayNameFilter_;
+                this.displayNameFilter = displayNameFilter;
 
                 this.mockSelected = 'choice 1';
                 // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
@@ -37,15 +38,15 @@
 
         });
 
-        it('should return origional data when it has not been found', function () {
+        it('should return original data when it has not been found', function () {
             var choice = 'Choice 4';
-            expect(displayNameFilter(choice, this.mockData)).toBe(choice);
+            expect(this.displayNameFilter(choice, this.mockData)).toBe(choice);
         });
 
         it('should return display name when it has a match', function () {
             // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
             /* jshint camelcase: false  */
-            expect(displayNameFilter(this.mockSelected, this.mockData)).toBe(this.mockData[0].display_name);
+            expect(this.displayNameFilter(this.mockSelected, this.mockData)).toBe(this.mockData[0].display_name);
             /* jshint camelcase: true  */
             // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
         });
