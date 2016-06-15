@@ -5,7 +5,7 @@
 
     // A filter to return a display name.
     // it matches the displayName from an array of objects, and returns the matching display_name.
-    // Example 
+    // Example
     // choice = 'choice 1';
     //
     // array = [
