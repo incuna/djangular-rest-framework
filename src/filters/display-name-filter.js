@@ -5,22 +5,17 @@
 
     // A filter to return a display name.
     drf.filter('drfDisplayName', function () {
-        return _.memoize(function (item, array) {
-            var displayName = item;
+        return _.memoize(function (displayName, array) {
 
-            var foundName = _.find(array, function (arrayItem) {
-                return arrayItem.value === item;
+            var foundName = _.find(array, {
+                value: displayName
             });
 
-            if (foundName) {
-                // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
-                /* jshint camelcase: false  */
-                displayName = foundName.display_name;
-                /* jshint camelcase: true */
-                // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
-            }
-
-            return displayName;
+            // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+            /* jshint camelcase: false  */
+            return foundName ? foundName.display_name : displayName;
+            /* jshint camelcase: true */
+            // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
 
         }, function (item, array) {
             return item + JSON.stringify(array);
