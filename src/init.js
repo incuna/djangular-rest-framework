@@ -3,7 +3,8 @@
 
     angular.module('djangularRestFramework', [
         'drf-config',
-        'drf-provider'
+        'drf-provider',
+        'drf-display-name-filter'
     ]);
 
 }(window.angular));
