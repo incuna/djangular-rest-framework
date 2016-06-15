@@ -9,9 +9,7 @@
             var displayName = item;
 
             var foundName = _.find(array, function (arrayItem) {
-                if (item === arrayItem.value) {
-                    return arrayItem;
-                }
+                return arrayItem.value === item;
             });
 
             if (foundName) {
