@@ -1,4 +1,4 @@
-### Upcoming
+## 4.2.0
 
 * Split the code into seperate files.
 * Add file linting.
