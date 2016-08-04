@@ -5,7 +5,8 @@
         'drf-config',
         'drf-provider',
         'drf-display-name-filter',
-        'drf-field-errors'
+        'drf-field-errors',
+        'drf-form-field'
     ]);
 
 }(window.angular));
