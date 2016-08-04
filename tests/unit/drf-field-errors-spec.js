@@ -1,4 +1,5 @@
 /* global describe, it, expect, module, inject, beforeEach */
+/* jshint es3:false, esnext:true */
 
 (function (_) {
 
@@ -6,7 +7,7 @@
 
     describe('drf-field-errors', function () {
         beforeEach(function () {
-            module('drf-field-errors')
+            module('drf-field-errors');
 
             inject(function (drfFieldErrors) {
                 this.drfFieldErrors = drfFieldErrors;
@@ -29,7 +30,7 @@
                     field1: {
                         errors: 'Error 1'
                     },
-                    field2 : {
+                    field2: {
                         errors: 'Error 2'
                     }
                 };
@@ -41,7 +42,7 @@
         });
 
         describe('set method', function () {
-            
+
             beforeEach(function () {
                 this.fields = {
                     errors: [],
@@ -53,7 +54,6 @@
                     }
                 };
             });
-            
 
             describe('non-field errors', function () {
 
@@ -69,7 +69,11 @@
 
                 it('should be set when under non_field_errors property', function () {
                     let errors = {
+                        // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+                        // jshint camelcase: false
                         non_field_errors: 'Error'
+                        // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+                        // jshint camelcase: true
                     };
 
                     this.drfFieldErrors.set(this.fields, errors);
@@ -79,18 +83,22 @@
 
                 it('should create an array of errors', function () {
                     let errors = {
+                        // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+                        // jshint camelcase: false
                         non_field_errors: [
                             'Error1',
                             'Error2'
                         ]
+                        // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+                        // jshint camelcase: true
                     };
-                    
+
                     this.drfFieldErrors.set(this.fields, errors);
 
                     expect(this.fields.errors[0].msg).toBe('Error1');
                     expect(this.fields.errors[1].msg).toBe('Error2');
                 });
-                
+
             });
 
             describe('field errors', function () {

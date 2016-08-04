@@ -14,7 +14,7 @@ module.exports = function (grunt) {
 
     require('time-grunt')(grunt);
 
-    const ngTemplatesPaths = require('./node_modules/grunt-incuna-plugins/helper-functions/ng-templates-paths')();
+    var ngTemplatesPaths = require('./node_modules/grunt-incuna-plugins/helper-functions/ng-templates-paths')();
 
     grunt.initConfig({
         config: {
@@ -25,7 +25,8 @@ module.exports = function (grunt) {
                     'src/**/*.js',
                     '<%= config.files.karmaTests %>',
                     './grunt/**/*.js',
-                    'Gruntfile.js'
+                    'Gruntfile.js',
+                    '!**/templates.js'
                 ],
                 karmaTests: 'tests/unit/**/*.js'
             }
