@@ -46,7 +46,6 @@ module.exports = function (grunt) {
         },
         ngtemplates: ngTemplatesPaths.generate('drf', 'src', 'src')
     });
-    console.log(ngTemplatesPaths.generate('drf', 'src', 'src'));
 
     // Load external grunt task config.
     grunt.loadTasks('./grunt');
