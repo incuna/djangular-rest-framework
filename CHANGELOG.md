@@ -1,6 +1,6 @@
-# upcoming
+## 5.1.0
 
-* Add `drf-form-field` directive
+* Add `drf-form-field` directive and `drfFieldErrors` service
 
 # 5.0.0
 
