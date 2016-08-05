@@ -1,7 +1,11 @@
 language: node_js
 
 node_js:
-    - '5.0.0'
+    - '6.0.0'
+
+addons:
+    firefox:
+        "47.0"
 
 notifications:
     email: false

@@ -7,11 +7,14 @@ module.exports = function (grunt) {
         require('load-grunt-tasks')(grunt);
     } else {
         require('jit-grunt')(grunt, {
-            force: 'grunt-force-task'
+            force: 'grunt-force-task',
+            ngtemplates: 'grunt-angular-templates'
         });
     }
 
     require('time-grunt')(grunt);
+
+    var ngTemplatesPaths = require('./node_modules/grunt-incuna-plugins/helper-functions/ng-templates-paths')();
 
     grunt.initConfig({
         config: {
@@ -22,7 +25,8 @@ module.exports = function (grunt) {
                     'src/**/*.js',
                     '<%= config.files.karmaTests %>',
                     './grunt/**/*.js',
-                    'Gruntfile.js'
+                    'Gruntfile.js',
+                    '!**/templates.js'
                 ],
                 karmaTests: 'tests/unit/**/*.js'
             }
@@ -40,13 +44,15 @@ module.exports = function (grunt) {
                 config: '.jscsrc'
             },
             src: '<%= config.files.lint %>'
-        }
+        },
+        ngtemplates: ngTemplatesPaths.generate('drf', 'src', 'src')
     });
 
     // Load external grunt task config.
     grunt.loadTasks('./grunt');
 
     grunt.registerTask('default', [
+        'ngtemplates',
         'test'
     ]);
 

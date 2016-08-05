@@ -15,5 +15,8 @@
     "trailing": true,
     "undef": "vars",
     "unused": "vars",
-    "white": true
+    "white": true,
+    "globals": {
+        "JSON": false
+    }
 }
