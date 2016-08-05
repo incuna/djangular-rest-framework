@@ -1,7 +1,10 @@
 (function (angular) {
     'use strict';
 
-    var module = angular.module('drf-form-field', ['drf-form-field.templates']);
+    var module = angular.module('drf-form-field', [
+        'drf-form-field.templates',
+        'angular-bind-html-compile'
+    ]);
 
     module.directive('drfFormField', [
         '$templateCache',
@@ -25,10 +28,10 @@
                     // if scope.field is undefined whilst waiting for an
                     // API response. We'll also need to watch that property on the
                     // scope for changes and update it.
-                    scope.field = scope.$eval(attrs.formField) || {};
+                    scope.field = scope.$eval(attrs.drfFormField) || {};
 
-                    scope.$watch(attrs.formField, function (field) {
-                        scope.field = scope.$eval(attrs.formField) || {};
+                    scope.$watch(attrs.drfFormField, function (field) {
+                        scope.field = scope.$eval(attrs.drfFormField) || {};
                     });
 
                     scope.$watch('field', function (field) {

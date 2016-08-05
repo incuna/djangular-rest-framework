@@ -15,7 +15,10 @@
             });
 
             this.$scope = this.$rootScope.$new();
-            let template = '<div drf-form-field><input type="text"></div>';
+            this.$scope.field = {
+                required: true
+            };
+            let template = '<div drf-form-field="field" label="A label"><input type="text"></div>';
             this.element = this.$compile(template)(this.$scope);
             this.$scope.$digest();
         });
@@ -23,6 +26,7 @@
         it('should not have the ng-transclude element', function () {
             let ngTranscludeElement = this.element[0].querySelector('[ng-transclude]');
 
+            console.log(this.element[0]);
             expect(ngTranscludeElement).toBe(null);
         });
 
@@ -31,6 +35,13 @@
 
             expect(transcludedElement).not.toBe(null);
         });
+
+        it('should have the asterisk if the field is required', function () {
+            let asteriskElement = this.element[0].querySelector('.control-label > .asterisk');
+
+            expect(asteriskElement).not.toBe(null);
+        });
+        
         
     });
 
