@@ -26,7 +26,6 @@
         it('should not have the ng-transclude element', function () {
             let ngTranscludeElement = this.element[0].querySelector('[ng-transclude]');
 
-            console.log(this.element[0]);
             expect(ngTranscludeElement).toBe(null);
         });
 
@@ -41,8 +40,7 @@
 
             expect(asteriskElement).not.toBe(null);
         });
-        
-        
+
     });
 
 }(window._));
