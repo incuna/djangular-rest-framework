@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    var module = angular.module('drf-form-field', []);
+    var module = angular.module('drf-form-field', ['drf-form-field.templates']);
 
     module.directive('drfFormField', [
         '$templateCache',
@@ -14,12 +14,12 @@
                 replace: true,
                 transclude: true,
                 template: function (elem, attrs) {
-                    var templateBase = 'templates/drf/';
-                    var defaultTemplate = 'drf-form-field.html';
+                    var templateBase = 'templates/drf/form-field/';
+                    var defaultTemplate = 'form-field.html';
                     var templateUrl = templateBase + (angular.isDefined(attrs.type) ? attrs.type + '.html' : defaultTemplate);
                     return $templateCache.get(templateUrl) || $templateCache.get(templateBase + defaultTemplate);
                 },
-                link: function (scope, element, attrs) {
+                link: function (scope, element, attrs, ctrl, transcludeFn) {
                     // Define a default object, so that assigning
                     // scope.label to scope.field.label does not fall over
                     // if scope.field is undefined whilst waiting for an
@@ -33,6 +33,11 @@
 
                     scope.$watch('field', function (field) {
                         scope.label = angular.isDefined(attrs.label) ? attrs.label : scope.field.label;
+                    });
+
+                    transcludeFn(function (clone) {
+                        var transcludeContainer = angular.element(element[0].querySelector('.transclude-container'));
+                        transcludeContainer.replaceWith(clone);
                     });
                 }
             };
