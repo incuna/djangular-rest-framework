@@ -1,15 +1,16 @@
-<div class="control-group" ng-class="{error: field.errors.length}">
-    <label class="control-label" ng-if="label" bind-html-compile="label"></label>
+<div class="control-group" ng-class="{error: field.errors.length, required: field.required}">
+    <label ng-if="label" class="control-label">
+        <span bind-html-compile="label"></span>
+        <span ng-if="field.required" class="asterisk">*</span>
+    </label>
 
     <div class="controls">
-        <div ng-transclude class="field-wrapper"></div>
+        <div class="transclude-container"></div><!-- the wrapping element will be removed -->
 
-        <span class="asterisk" ng-if="field.required">*</span>
-
-        <div class="errors help-block" ng-if="field.errors" bind-html-compile="field.errors"></div>
-
-        <div class="help help-block" ng-if="field.help_text">
-            <span bind-html-compile="field.help_text"></span>
+        <div class="error-block field-error" ng-if="field.errors">
+            <p class="error" bind-html-compile="field.errors"></p>
         </div>
+
+        <p class="field-help-text" ng-if="field.help_text" bind-html-compile="field.help_text"></p>
     </div>
 </div>

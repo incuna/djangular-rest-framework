@@ -16,6 +16,7 @@ module.exports = function (grunt) {
                     '<%= config.lib %>/angular-cache/dist/angular-cache.js',
                     '<%= config.lib %>/angular-ext-q/angular-ext-q.js',
                     '<%= config.lib %>/angular-mocks/angular-mocks.js',
+                    '<%= config.lib %>/angular-bind-html-compile/angular-bind-html-compile.js',
 
                     '<%= config.lib %>/lodash/dist/lodash.js',
 
