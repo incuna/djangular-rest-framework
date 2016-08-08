@@ -1,6 +1,6 @@
 <div class="control-group" ng-class="{error: field.errors.length, required: field.required}">
-    <label class="control-label">
-        <span ng-if="label" bind-html-compile="label"></span>
+    <label ng-if="label" class="control-label">
+        <span bind-html-compile="label"></span>
         <span ng-if="field.required" class="asterisk">*</span>
     </label>
 
