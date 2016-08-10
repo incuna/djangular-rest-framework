@@ -1,4 +1,4 @@
-# Upcoming
+# 6.1.0
 
 * Add possibility of adding an id to the for attribute of the label via `field-id` attribute
 
