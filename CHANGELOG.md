@@ -1,6 +1,6 @@
 # Upcoming
 
-* Add possibility of adding an id to the for attribute of the label via label-it attribute
+* Add possibility of adding an id to the for attribute of the label via `field-id` attribute
 
 # 6.0.0
 
