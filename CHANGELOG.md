@@ -1,6 +1,6 @@
 # Upcoming
 
-* Add unique `id` and `for` to form field
+* Add possibility of adding an id to the for attribute of the label via label-it attribute
 
 # 6.0.0
 
