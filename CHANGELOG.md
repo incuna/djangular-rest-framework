@@ -1,3 +1,7 @@
+# Upcoming
+
+* Add unique `id` and `for` to form field
+
 # 6.0.0
 
 * BREAKING CHANGE: Update `drf-form-field` template to match https://github.com/incuna/style-guide/blob/137a7c092703292ec93713088e10cdce650b5a6a/templates/components/forms.html

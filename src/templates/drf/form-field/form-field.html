@@ -1,5 +1,5 @@
 <div class="control-group" ng-class="{error: field.errors.length, required: field.required}">
-    <label ng-if="label" class="control-label">
+    <label ng-if="label" class="control-label" for="{{ scope.field.id }}">
         <span bind-html-compile="label"></span>
         <span ng-if="field.required" class="asterisk">*</span>
     </label>

@@ -36,6 +36,7 @@
 
                     scope.$watch('field', function (field) {
                         scope.label = angular.isDefined(attrs.label) ? attrs.label : scope.field.label;
+                        scope.id = angular.isDefined(attrs.fieldId) ? attrs.fieldId : scope.field.id;
                     });
 
                     transcludeFn(function (clone) {
